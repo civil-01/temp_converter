@@ -33,9 +33,9 @@ class Converter():
         self.temp_entry.grid(row=2)
 
         error = "Please enter a number"
-        self.temp_error = Label(self.temp_frame, text=error,
-                                fg="#9c0000")
-        self.temp_error.grid(row=3)
+        self.answer_error = Label(self.temp_frame, text=error,
+                                  fg="#004c99")
+        self.answer_error.grid(row=3)
 
         # conversion, help and history / export buttons
         self.button_frame = Frame(self.temp_frame)
@@ -65,22 +65,43 @@ class Converter():
         self.to_history_button = self.button_ref_list[3].config(state=DISABLED)
 
     def check_temp(self, min_temp):
-        print("Min Temp: ", min_temp)
+        """
+        Checks temperature is valid and either invokes a calculation
+        function or shows a custom error
+        """
+        # print("Min Temp: ", min_temp)
 
         # Retrieve temperature to be converted
         to_convert = self.temp_entry.get()
 
         print("to convert", to_convert)
 
+        # reset label and entry box (if we had an error)
+        self.answer_error.config(fg="#004C99")
+        self.temp_entry.config(bg="#FFFFFF")
+
         try:
             to_convert = float(to_convert)
             if to_convert >= min_temp:
-                print("You are OK")
+                error = ""
+                self.convert(min_temp)
             else:
-                print("Too Low!")
+                error = "Too Low"
 
         except ValueError:
-            print("Please enter a number!")
+            error = "please enter a number"
+
+        # display the error if necessary
+        if error != "":
+            self.answer_error.config(text=error, fg="#9C0000")
+            self.temp_entry.config(bg="#f4CCCC")
+            self.temp_entry.delete(0, END)
+
+    def convert(self, min_temp):
+        if min_temp == c.ABS_ZERO_CELSIUS:
+            self.answer_error.config(text="Converting to F")
+        else:
+            self.answer_error.config(text="Converting to C")
 
 
 # main routine
