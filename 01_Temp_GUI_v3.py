@@ -64,12 +64,11 @@ class Converter():
         # retrieve 'history / export' button and disable it at the start ref at 3 which is line 4 as it starts at line 0
         self.to_history_button = self.button_ref_list[3].config(state=DISABLED)
 
-    def check_temp(self, min_temp):
+    def check_temp(self, min_temp,):
         """
         Checks temperature is valid and either invokes a calculation
         function or shows a custom error
         """
-        # print("Min Temp: ", min_temp)
 
         # Retrieve temperature to be converted
         to_convert = self.temp_entry.get()
@@ -77,31 +76,43 @@ class Converter():
         print("to convert", to_convert)
 
         # reset label and entry box (if we had an error)
-        self.answer_error.config(fg="#004C99")
+        self.answer_error.config(fg="#004C99", font=("Arial", "13", "bold"))
         self.temp_entry.config(bg="#FFFFFF")
+
+        error = f"Enter a number more than / equal to {min_temp}"
+        has_errors = "no"
 
         try:
             to_convert = float(to_convert)
             if to_convert >= min_temp:
                 error = ""
-                self.convert(min_temp)
+                self.convert(min_temp, to_convert)
             else:
-                error = "Too Low"
+                # error = "Too Low"
+                pass
 
         except ValueError:
-            error = "please enter a number"
+            # error = "please enter a number"
+            pass
 
         # display the error if necessary
         if error != "":
             self.answer_error.config(text=error, fg="#9C0000")
             self.temp_entry.config(bg="#f4CCCC")
             self.temp_entry.delete(0, END)
-
-    def convert(self, min_temp):
-        if min_temp == c.ABS_ZERO_CELSIUS:
-            self.answer_error.config(text="Converting to F")
         else:
-            self.answer_error.config(text="Converting to C")
+            self.answer_error.config(text=error)
+
+    def convert(self, min_temp, to_convert):
+        """
+        Converts temperatures and updates answer label. Also stores
+        calculations for export / history feature
+        """
+
+        if min_temp == c.ABS_ZERO_CELSIUS:
+            self.answer_error.config(text=f"Converting {to_convert}°C to °F")
+        else:
+            self.answer_error.config(text=f"Converting {to_convert}°F to °C")
 
 
 # main routine
