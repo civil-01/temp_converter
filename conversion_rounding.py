@@ -4,7 +4,7 @@ def round_ans(val):
     :param val: Number to be rounded
     :return: Number rounded to nearest degree
     """
-    var_rounded = (val *2 +1) // 2
+    var_rounded = (val * 2 + 1) // 2
     return "{:.0f}".format(var_rounded)
 
 
@@ -14,12 +14,21 @@ def to_celsius(to_convert):
     :param to_convert: Temperature TO BE converted IN °F
     :return:
     """
+    answer = (to_convert - 32) * 5 / 9
+    return round_ans(answer)
+
 
 def to_fahrenheit(to_convert):
-
-
+    """
+    Converts from °C to °F
+    :param to_convert: Temperature TO BE converted IN °F
+    :return:
+    """
+    answer = to_convert * 1.8 + 32
+    return round_ans(answer)
 
     # main routine / testing starts here
+
 
 to_c_test = [0, 100, -459]
 to_f_test = [0, 100, 40, -273]
