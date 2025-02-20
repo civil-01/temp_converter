@@ -31,7 +31,10 @@ class ExportHistory:
 
     def __init__(self, partner):
         # setup dialogue box amd background colour
-        background = "#ffe6cc"
+
+        green_back = "#D5E8D4"
+        peach_back = "#ffe6cc"
+
         self.history_box = Toplevel()
 
         # disable history button
@@ -42,9 +45,33 @@ class ExportHistory:
         self.history_box.protocol('WM_DELETE_WINDOW',
                                   partial(self.close_history, partner))
 
-        self.history_frame = Frame(self.history_box, width=300,
-                                   height=200)
+        self.history_frame = Frame(self.history_box)
         self.history_frame.grid()
+
+        # strings for 'long' labels
+        recent_intro_txt = ("Below are your recent calculations - showing "
+                            "3 / 3 calculations. All calculations are "
+                            "shown to the nearest degree")
+
+        export_instructions_txt = ("Please push <Export> to save your calculations in"
+                                   "file if the file name already exists it will be")
+
+        calculations = ""
+
+        # label list (label text | format | bg)
+        history_label_list = [
+            ["History / Export", ("Arial", "16", "bold"), None],
+            [recent_intro_txt, ("Arial", "11"), None],
+            ["calculations list", ("Arial", "11", green_back)],
+            [export_instructions_txt, ("Arial", "11"), None]
+        ]
+
+        history_label_ref = []
+        for count, item in enumerate(history_label_list):
+            make_label = Label(self.history_box, text=item[0], font=item[1],
+                               bg=item[2],
+                               wraplength=300, justify="left", pady=10, padx=20)
+            make_label.grid(row=count)
 
         self.history_heading_label = Label(self.history_frame,
                                            text="history / Info",
