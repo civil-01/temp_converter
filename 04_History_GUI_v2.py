@@ -1,5 +1,6 @@
 from tkinter import *
 from functools import partial  # To prevent unwanted windows
+import all_constants as c
 
 
 class Converter:
@@ -24,16 +25,12 @@ class Converter:
         self.to_history_button.grid(row=1, padx=5, pady=5)
 
     def to_history(self):
-        ExportHistory(self)
+        ExportHistory(self, self.all_calculations_list)
 
 
 class ExportHistory:
 
-    def __init__(self, partner):
-        # setup dialogue box amd background colour
-
-        green_back = "#D5E8D4"
-        peach_back = "#ffe6cc"
+    def __init__(self, partner, calculations):
 
         self.history_box = Toplevel()
 
@@ -48,10 +45,18 @@ class ExportHistory:
         self.history_frame = Frame(self.history_box)
         self.history_frame.grid()
 
+        # background colour and text for calculation area
+        if len(calculations) <= c.MAX_CALCS:
+            calc_back = "#D5E8D4"
+            calc_amount = "all your"
+        else:
+            calc_back = "#ffe6cc"
+            calc_amount = (f"your recent calculations -"
+                           f"showing {c.MAX_CALCS} / {len(calculations)}")
+
         # strings for 'long' labels
-        recent_intro_txt = ("Below are your recent calculations - showing "
-                            "3 / 3 calculations. All calculations are "
-                            "shown to the nearest degree")
+        recent_intro_txt = (f"Below are {calc_amount} calculations "
+                            "(to the nearest degree)")
 
         export_instructions_txt = ("Please push <Export> to save your calculations in"
                                    "file if the file name already exists it will be")
@@ -62,7 +67,7 @@ class ExportHistory:
         history_label_list = [
             ["History / Export", ("Arial", "16", "bold"), None],
             [recent_intro_txt, ("Arial", "11"), None],
-            ["calculations list", ("Arial", "11"), green_back],
+            ["calculations list", ("Arial", "11"), calc_back],
             [export_instructions_txt, ("Arial", "11"), None]
         ]
 

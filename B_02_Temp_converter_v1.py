@@ -4,7 +4,7 @@ import all_constants as c
 import conversion_rounding as cr
 
 
-class Converter():
+class Converter:
     """
     Temperature conversion tool (°C to °F or °F tp °C)
     """
@@ -14,7 +14,10 @@ class Converter():
         Temperature converter GUI
         """
 
-        self.all_calculations_list = []
+        self.all_calculations_list = [['10.0°F is -12°C', '10.0°F is -12°C', '20.0°F is -7°C', '20.0°F is -7°C',
+                                       '30.0°F is -1°C', '30.0°F is -1°C', '40.0°F is 4°C', '40.0°F is 4°C',
+                                       '50.0°F is 10°C', '50.0°F is 10°C', '60.0°F is 16°C', '60.0°F is 16°C']
+]
 
         self.temp_frame = Frame(padx=10, pady=10)
         self.temp_frame.grid()
