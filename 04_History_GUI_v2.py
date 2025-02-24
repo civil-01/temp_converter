@@ -24,6 +24,10 @@ class Converter:
                                         command=self.to_history)
         self.to_history_button.grid(row=1, padx=5, pady=5)
 
+        self.all_calculations_list = ['10.0°F is -12°C', '10.0°F is -12°C', '20.0°F is -7°C', '20.0°F is -7°C',
+                                      '30.0°F is -1°C', '30.0°F is -1°C', '40.0°F is 4°C', '40.0°F is 4°C',
+                                      '50.0°F is 10°C', '50.0°F is 10°C', '60.0°F is 16°C', '60.0°F is 16°C']
+
     def to_history(self):
         ExportHistory(self, self.all_calculations_list)
 
@@ -58,8 +62,27 @@ class ExportHistory:
         recent_intro_txt = (f"Below are {calc_amount} calculations "
                             "(to the nearest degree)")
 
+        #  Create string from calculations list (newest calculations first)
+        newest_first_string = ""
+        newest_first_list = list(reversed(calculations))
+
+        # Last item added in outside the for loop so that the spacing is correct
+        if len(newest_first_list) <= c.MAX_CALCS:
+
+            for item in newest_first_list[:-1]:
+                newest_first_string += item + "\n"
+
+            newest_first_string += newest_first_list[-1]
+
+        # If we have more tha five items
+        else:
+            for item in newest_first_list[:c.MAX_CALCS-1]:
+                newest_first_string += item + "\n"
+
+            newest_first_string += newest_first_list[c.MAX_CALCS-1]
+
         export_instructions_txt = ("Please push <Export> to save your calculations in"
-                                   "file if the file name already exists it will be")
+                                   "file if the file name already exists it will be overwritten!")
 
         calculations = ""
 
@@ -67,7 +90,7 @@ class ExportHistory:
         history_label_list = [
             ["History / Export", ("Arial", "16", "bold"), None],
             [recent_intro_txt, ("Arial", "11"), None],
-            ["calculations list", ("Arial", "11"), calc_back],
+            [newest_first_string, ("Arial", "11"), calc_back],
             [export_instructions_txt, ("Arial", "11"), None]
         ]
 
