@@ -21,4 +21,10 @@ with open(write_to, "w") as text_file:
     text_file.write(f"Generated: {day}/{month}/{year}\n\n")
     text_file.write("Here is your calculation history (oldest to newest)...\n")
 
+    # write the item to file
+    for item in calculations:
+        text_file.write(item)
+        text_file.write("\n")
+
+
     

@@ -25,9 +25,40 @@ class Converter:
                                         command=self.to_history)
         self.to_history_button.grid(row=1, padx=5, pady=5)
 
+        # self.all_calculations_list = ['10.0°F is -12°C', '10.0°F is -12°C', '20.0°F is -7°C', '20.0°F is -7°C',
+        #                               '30.0°F is -1°C', '30.0°F is -1°C', '40.0°F is 4°C', '40.0°F is 4°C',
+        #                               '50.0°F is 10°C', '50.0°F is 10°C', '60.0°F is 16°C', '60.0°F is 16°C']
+
         self.all_calculations_list = ['10.0°F is -12°C', '10.0°F is -12°C', '20.0°F is -7°C', '20.0°F is -7°C',
                                       '30.0°F is -1°C', '30.0°F is -1°C', '40.0°F is 4°C', '40.0°F is 4°C',
-                                      '50.0°F is 10°C', '50.0°F is 10°C', '60.0°F is 16°C', '60.0°F is 16°C']
+                                      '50.0°F is 10°C', '50.0°F is 10°C', '60.0°F is 16°C', 'This is a test']
+
+    def export_data(self, calculations):
+        # **** Get current date for heading and filename ****
+        today = date.today()
+
+        # Get day,  month and year as individual strings
+        day = today.strftime("%d")
+        month = today.strftime("%m")
+        year = today.strftime("%y")
+
+        file_name = f"temperatures_{year}_{month}_{day}"
+
+        success_string = ("Export Successful! The file is called "
+                          F"{file_name}.txt")
+        self.export_filename_label.config(bg="#09900", text=success_string)
+
+        write_to = f"{file_name}.txt"
+
+        with open(write_to, "w") as text_file:
+            text_file.write("***** Temperature Calculations *****\n")
+            text_file.write(f"Generated: {day}/{month}/{year}\n\n")
+            text_file.write("Here is your calculation history (oldest to newest)...\n")
+
+            # write the item to file
+            for item in calculations:
+                text_file.write(item)
+                text_file.write("\n")
 
     def to_history(self):
         ExportHistory(self, self.all_calculations_list)
@@ -126,33 +157,6 @@ class ExportHistory:
                                       fg="#FFFFFF", width=12,
                                       command=btn[2])
             self.make_button.grid(row=btn[3], column=btn[4], padx=10, pady=10)
-
-    def export_data(self, calculations):
-        # **** Get current date for heading and filename ****
-        today = date.today()
-
-        # Get day,  month and year as individual strings
-        day = today.strftime("%d")
-        month = today.strftime("%m")
-        year = today.strftime("%y")
-
-        file_name = f"temperatures_{year}_{month}_{day}"
-
-        success_string = ("Export Successful! The file is called "
-                          F"{file_name}.txt")
-        self.export_filename_label.config(bg="#09900", text=success_string)
-
-        write_to = f"{file_name}.txt"
-
-        with open(write_to, "w") as text_file:
-            text_file.write("***** Temperature Calculations *****\n")
-            text_file.write(f"Generated: {day}/{month}/{year}\n\n")
-            text_file.write("Here is your calculation history (oldest to newest)...\n")
-
-            # write the item to file
-            for item in calculations:
-                text_file.write(item)
-                text_file.write("\n")
 
     def close_history(self, partner):
         """

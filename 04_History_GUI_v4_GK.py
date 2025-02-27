@@ -25,9 +25,13 @@ class Converter:
                                         command=self.to_history)
         self.to_history_button.grid(row=1, padx=5, pady=5)
 
+        # self.all_calculations_list = ['10.0°F is -12°C', '10.0°F is -12°C', '20.0°F is -7°C', '20.0°F is -7°C',
+        #                               '30.0°F is -1°C', '30.0°F is -1°C', '40.0°F is 4°C', '40.0°F is 4°C',
+        #                               '50.0°F is 10°C', '50.0°F is 10°C', '60.0°F is 16°C', '60.0°F is 16°C']
+
         self.all_calculations_list = ['10.0°F is -12°C', '10.0°F is -12°C', '20.0°F is -7°C', '20.0°F is -7°C',
                                       '30.0°F is -1°C', '30.0°F is -1°C', '40.0°F is 4°C', '40.0°F is 4°C',
-                                      '50.0°F is 10°C', '50.0°F is 10°C', '60.0°F is 16°C', '60.0°F is 16°C']
+                                      '50.0°F is 10°C', '50.0°F is 10°C', '60.0°F is 16°C', 'This is a test']
 
     def to_history(self):
         ExportHistory(self, self.all_calculations_list)
@@ -85,7 +89,7 @@ class ExportHistory:
         export_instructions_txt = ("Please push <Export> to save your calculations in"
                                    "file if the file name already exists it will be overwritten!")
 
-        calculations = ""
+        # calculations = ""
 
         # label list (label text | format | bg)
         history_label_list = [
@@ -140,7 +144,7 @@ class ExportHistory:
 
         success_string = ("Export Successful! The file is called "
                           F"{file_name}.txt")
-        self.export_filename_label.config(bg="#09900", text=success_string)
+        self.export_filename_label.config(bg="#009900", text=success_string)
 
         write_to = f"{file_name}.txt"
 
